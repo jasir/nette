@@ -22,11 +22,17 @@ use Nette;
  */
 class HiddenField extends BaseControl
 {
+	/** @var string */
+	private $forcedValue;
 
-	public function __construct()
+
+
+	public function __construct($forcedValue = NULL)
 	{
 		parent::__construct();
 		$this->control->type = 'hidden';
+		$this->value = (string) $forcedValue;
+		$this->forcedValue = $forcedValue;
 	}
 
 
@@ -62,7 +68,7 @@ class HiddenField extends BaseControl
 	public function getControl()
 	{
 		return parent::getControl()
-			->value($this->value)
+			->value($this->forcedValue === NULL ? $this->value : $this->forcedValue)
 			->data('nette-rules', NULL);
 	}
 
